@@ -38,12 +38,37 @@ IF @table_type NOT IN ('positive', 'negative', 'both')
 ELSE
 	IF OBJECT_ID('dbo.RandomTable', 'U') IS NOT NULL
 		BEGIN
-			DROP TABLE [dbo].[RandomTable]
+			DROP TABLE [dbo].[RandomTable];
+			
+			CREATE TABLE RandomTable (
+				column_1 FLOAT
+			);
+			
+			WHILE (@counter <= @rows)
+			BEGIN
+				IF @table_type = 'positive' 
+					INSERT INTO RandomTable
+					VALUES (
+						ROUND(@column_scale_parameter * RAND(), @decimal_places) 
+					);
+				IF @table_type = 'negative' 
+					INSERT INTO RandomTable
+					VALUES (
+						(-1) * ROUND(@column_scale_parameter * RAND(), @decimal_places) 
+					);
+				IF @table_type = 'both' 
+					INSERT INTO RandomTable
+					VALUES (
+						(2 * ROUND(RAND(), 0) - 1) * ROUND(@column_scale_parameter * RAND(), @decimal_places) 
+					);
+				SET @counter = @counter + 1;
+			END;
 		END;
 	ELSE
 		CREATE TABLE RandomTable (
 			column_1 FLOAT
 		);
+		
 		WHILE (@counter <= @rows)
 		BEGIN
 			IF @table_type = 'positive' 

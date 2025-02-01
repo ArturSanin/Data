@@ -74,7 +74,47 @@ IF @table_type NOT IN ('positive', 'negative', 'both')
 ELSE 
 	IF OBJECT_ID('dbo.RandomTable', 'U') IS NOT NULL
 		BEGIN
-			DROP TABLE [dbo].[RandomTable]
+			DROP TABLE [dbo].[RandomTable];
+
+			CREATE TABLE RandomTable (
+				column_1 FLOAT,
+				column_2 FLOAT,
+				column_3 FLOAT,
+				column_4 FLOAT,
+				column_5 FLOAT
+			);
+
+			WHILE (@counter <= @rows)
+			BEGIN
+				IF @table_type = 'positive' 
+					INSERT INTO RandomTable
+					VALUES (
+						ROUND(@column_scale_parameter_1 * RAND(), @decimal_places_column_1),
+						ROUND(@column_scale_parameter_2 * RAND(), @decimal_places_column_2),
+						ROUND(@column_scale_parameter_3 * RAND(), @decimal_places_column_3),
+						ROUND(@column_scale_parameter_4 * RAND(), @decimal_places_column_4),
+						ROUND(@column_scale_parameter_5 * RAND(), @decimal_places_column_5)
+					);
+				IF @table_type = 'negative' 
+					INSERT INTO RandomTable
+					VALUES (
+						(-1) * ROUND(@column_scale_parameter_1 * RAND(), @decimal_places_column_1),
+						(-1) * ROUND(@column_scale_parameter_2 * RAND(), @decimal_places_column_2),
+						(-1) * ROUND(@column_scale_parameter_3 * RAND(), @decimal_places_column_3),
+						(-1) * ROUND(@column_scale_parameter_4 * RAND(), @decimal_places_column_4),
+						(-1) * ROUND(@column_scale_parameter_5 * RAND(), @decimal_places_column_5)
+					);
+				IF @table_type = 'both' 
+					INSERT INTO RandomTable
+						VALUES (
+						(2 * ROUND(RAND(), 0) - 1) * ROUND(@column_scale_parameter_1 * RAND(), @decimal_places_column_1),
+						(2 * ROUND(RAND(), 0) - 1) * ROUND(@column_scale_parameter_2 * RAND(), @decimal_places_column_2),
+						(2 * ROUND(RAND(), 0) - 1) * ROUND(@column_scale_parameter_3 * RAND(), @decimal_places_column_3),
+						(2 * ROUND(RAND(), 0) - 1) * ROUND(@column_scale_parameter_4 * RAND(), @decimal_places_column_4),
+						(2 * ROUND(RAND(), 0) - 1) * ROUND(@column_scale_parameter_5 * RAND(), @decimal_places_column_5)
+					);
+				SET @counter = @counter + 1;
+			END;
 		END;
 	ELSE
 		CREATE TABLE RandomTable (
