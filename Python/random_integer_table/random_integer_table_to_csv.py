@@ -12,6 +12,8 @@ def random_integer_table_to_csv(n_rows, n_columns, values_type='positive'):
     :param values_type: Sets the type of values to be positive, negative, or both.
     :return: Creates a csv-File in the directory csv_files.
     """
+    if values_type not in ['positive', 'negative', 'both']:
+        raise ValueError("values_typ must be one of the following values: positive, negative or both.")
     df = pd.DataFrame()
     if values_type == 'positive':
         for i in range(1, n_columns + 1):
@@ -33,7 +35,7 @@ def random_integer_table_to_csv(n_rows, n_columns, values_type='positive'):
             df['column_' + str(i)] = values
     pathlib.Path(os.getcwd() + '/csv_files').mkdir(parents=True, exist_ok=True)
     lst = os.listdir(os.getcwd() + '/csv_files')
-    df.to_csv(os.getcwd() + '/csv_files' + '/integer_table_' + str(len(lst) + 1), index=False)
+    df.to_csv(os.getcwd() + '/csv_files' + '/integer_table_' + str(len(lst) + 1) + '.csv', index=False)
 
 
 random_integer_table_to_csv(100, 2, 'both')

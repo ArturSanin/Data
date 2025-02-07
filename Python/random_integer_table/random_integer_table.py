@@ -10,6 +10,8 @@ def random_integer_table(n_rows, n_columns, values_type='positive'):
     :param values_type: Sets the type of values to be positive, negative, or both.
     :return: DataFrame with the specified number of rows, columns, and value type.
     """
+    if values_type not in ['positive', 'negative', 'both']:
+        raise ValueError("values_typ must be one of the following values: positive, negative or both.")
     df = pd.DataFrame()
     if values_type == 'positive':
         for i in range(1, n_columns + 1):
