@@ -4,12 +4,12 @@ import pathlib
 import os
 
 
-def random_float_valued_table_to_csv(n_rows, n_columns, values_type='positive'):
+def random_float_valued_table_to_csv(n_rows, n_columns, values_type='both'):
     """
 
     :param n_rows: Number of rows of the table.
     :param n_columns: Number of columns of the table.
-    :param values_type: Sets the type of values to be positive, negative, or both.
+    :param values_type: Sets the type of values to be positive, negative, or both. Default both.
     :return: DataFrame with the specified number of rows, columns, and value type.
     """
     if values_type not in ['positive', 'negative', 'both']:
